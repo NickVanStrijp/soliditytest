@@ -1,19 +1,25 @@
 {
-  "name": "ethereum-js-sample",
-  "version": 1,
-  "dependencies": {
-    "async": "^1.5.2",
-    "ethereumjs-tx": "^1.0.0",
-    "web3": "0.17.0-alpha"
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "That's a sample application to demonstrate working with Ethereum from js using web3.js and ethereumjs-tx.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ether-camp/example-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ether-camp/example-project/issues"
+  },
+  "homepage": "https://github.com/ether-camp/example-project#readme",
   "devDependencies": {
-    "browserify": "^13.0.0",
-    "ethereum-sandbox-helper": "^1.0.0-beta6",
-    "ethereum-sandbox-workbench": "^1.0.0-beta11",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^2.2.0",
-    "mocha": "^2.4.5",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
+    "gulp": "^3.9.1"
   }
 }
