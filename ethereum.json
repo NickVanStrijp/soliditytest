@@ -1,7 +1,7 @@
 {
   "contracts": "contracts",
   
-  "deploy": ["Contract"],
+  "deploy": [],
   
   "env": {
     "block": {
@@ -30,8 +30,8 @@
       "0x084f6a99003dae6d3906664fdbf43dd09930d0e3": {
         "balance": 1234567890123345,
         "deploy": {
-          "source": "_pre/name_reg.sol",
-          "contract": "NameReg"
+          "source": "contracts/coin.sol",
+          "contract": "Coin"
         }
       }
     }
