@@ -1,5 +1,12 @@
 pragma solidity ^0.4.0;
 
+contract SchedulerInterface {
+    function scheduleCall(address contractAddress,
+                          bytes4 abiSignature,
+                          uint targetBlock,
+                          ) public returns (address);
+}
+
 contract IcoSmartContract{
     //Constants for date function calculations 
     uint constant DAY_IN_SECONDS = 86400;
@@ -9,6 +16,9 @@ contract IcoSmartContract{
     uint constant MINUTE_IN_SECONDS = 60;
     uint16 constant ORIGIN_YEAR = 1970;
     
+    //Instantiating a way to interact with with Ethereum Alarm Clock service through a new contract
+    SchedulerInterface constant scheduler = SchedulerInterface(0x6c8f2a135f6ed072de4503bd7c4999a1a17f824b);
+
     //Creating a public address variable for the buyer of the ICO 
     address public buyer;
     //ICO Name
@@ -20,8 +30,22 @@ contract IcoSmartContract{
     // Starting block number for the ICO
     uint icoStartBlock;
     
-    //Using the Web3 API, watching for latest activity 
-    var blockFilter = web3.eth.filter('latest');
+    //
+    function scheduleIco() {
+        
+        uint[3] memory uintArgs = [
+            200000,      // the amount of gas that will be sent with the txn.
+            0,           // the amount of ether (in wei) that will be sent with the txn
+            lockedUntil, // the first block number on which the transaction can be executed.
+        ];
+        
+        // Schedule a call to the `callback` function
+        Scheduler.value(2 ether).scheduleCall(
+            address(this),               // the address that should be called.
+            bytes4(sha3("callback()")),  // 4-byte abi signature of callback fn
+            block.number + 480,          // the block number to execute the call
+        );
+    }
     
     //For each address, the contract will store the amount of eth associated
     mapping (address => uint) public balances;
@@ -32,6 +56,9 @@ contract IcoSmartContract{
         buyer = msg.sender;
         //Adding the amount of ether sent to the contract to the buyer's balance
         balances[buyer] += amount;
+        
+        
+        
     }
     
     //Allows the buyer to change the ICO name
@@ -133,6 +160,19 @@ contract IcoSmartContract{
                     return timestamp;
     }
     
+    //Transfers ether between accounts
+    function buyIco(){
+        
+        icoAddress.call.gas(200000).value(balances[buyer].amount)();
+        balances[buyer] -= balances[buyer].amount;
+    }
+    
+    //Ethereum Alarm clock schedule transaction
+    function scheduleTransaction(address toAddress,
+                                 bytes callData,
+                                 uint8 windowSize,
+                                 uint[3] uintArgs) public returns (address);
+    
     //Watching for the start of the ICO Start Block to begin the transaction process
     blockFilter.watch(function(error, result){
         uint blockNumber = web3.eth.getBlock(result, true);
@@ -142,22 +182,15 @@ contract IcoSmartContract{
         
         if(blockNumber >= icoStartBlock && blockTimestamp >= icoStartBlock){
             if(balances[buyer] == 0) return; 
-           
             
             
-        }else{
+            
+        }if{(blockNumber >= icoStartBlock && blockTimestamp < icoStartBlock)
             
         }
         
         console.log('current block #' + block.number);
     });
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 }
