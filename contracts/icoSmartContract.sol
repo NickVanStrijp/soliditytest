@@ -1,10 +1,11 @@
 pragma solidity ^0.4.0;
 
 contract SchedulerInterface {
-    function scheduleCall(address contractAddress,
-                          bytes4 abiSignature,
-                          uint targetBlock,
-                          ) public returns (address);
+    uint temporalUnit = 1; 
+    
+    function scheduleTransaction(address toAddress,
+                                 bytes callData,
+                                 uint[4] uintArgs) doReset public returns (address);
 }
 
 contract IcoSmartContract{
